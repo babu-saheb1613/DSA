@@ -1,0 +1,56 @@
+class Solution {
+public:
+bool safeQueens( vector<string> &board,int n,int rows,int cols) {
+    //horizonal
+    for(int j=0; j<n; j++) {
+        if(board[rows][j] == 'Q') {
+            return false;
+        }
+    }
+   
+    // verical
+     for(int i=0; i<n; i++) {
+        if(board[i][cols] == 'Q') {
+            return false;
+
+        }
+    }
+    //left digonal
+    for(int i=rows,j=cols; i>=0 && j>=0; i--,j--) {
+        if(board[i][j] == 'Q') {
+            return false;
+        }
+    }
+    //right digonal
+
+     for(int i=rows, j=cols; i>=0 && j<n; i--,j++) {
+        if(board[i][j] == 'Q') {
+            return false;
+        }
+    }
+    return true;
+}
+void solveNQueens( vector<string> &board,vector<vector<string>> &ans,int n,int rows) {
+    if(rows == n) {
+        ans.push_back(board);
+        return;
+    }
+    for(int j=0; j<n; j++) {
+        if(safeQueens(board,n,rows,j)) {
+            board[rows][j] = 'Q';
+            solveNQueens(board,ans,n,rows +1);
+            board[rows][j] = '.';
+        }
+    }
+}
+    vector<vector<string>> solveNQueens(int n) {
+        vector<string> board(n,string(n, '.'));
+        vector<vector<string>> ans;
+
+        solveNQueens(board,ans,n, 0); 
+        return ans;
+
+
+        
+    }
+};
