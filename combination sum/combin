@@ -1,0 +1,34 @@
+class Solution {
+public:
+set<vector<int>>s;
+void allCombination(vector<int>& arr,int idx, vector<int> &combin, vector<vector<int>> &ans, int target) {
+    if(idx == arr.size() || target < 0) {
+        return;
+    }
+    
+    if(target == 0) {
+        if(s.find(combin) == s.end()) {
+             ans.push_back({combin});
+             s.insert(combin);
+
+        }
+       
+        return;
+    }
+    combin.push_back(arr[idx]);
+    allCombination(arr,idx+1,combin,ans,target-arr[idx]);
+    allCombination(arr,idx,combin,ans,target-arr[idx]);
+     combin.pop_back();
+     allCombination(arr,idx+1,combin,ans,target);
+
+}
+    vector<vector<int>> combinationSum(vector<int>& arr, int target) {
+        vector<vector<int>> ans;
+        vector<int> combin;
+        
+         allCombination(arr,0, combin,ans, target);
+         return ans;
+
+        
+    }
+};
